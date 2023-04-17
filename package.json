@@ -18,10 +18,13 @@
   "dependencies": {
     "@apollo/client": "^3.7.12",
     "apollo-server-express": "^3.6.1",
+    "bootstrap": "^5.2.3",
+    "dotenv": "^16.0.3",
     "express": "^4.17.2",
     "graphql": "^16.2.0",
-    "init": "^0.1.2",
-    "mongoose": "^6.10.5"
+    "jwt-decode": "^3.1.2",
+    "mongodb": "^5.2.0",
+    "react-bootstrap": "^2.7.4"
   },
   "engines": {
     "node": "16.16.0"
