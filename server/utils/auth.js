@@ -9,7 +9,7 @@ module.exports = {
   // function for our authenticated routes
   authMiddleware: function (req) {
     // allows token to be sent via req.body, req.query or headers
-    let token = req.query.token || req.body.token ||req.headers.authorization;
+    let token = req.query.token ||req.headers.authorization || req.body.token ;
 // we split the token string into an array and retrun actual token
     // ["Bearer", "<tokenvalue>"]
     if (req.headers.authorization) {
