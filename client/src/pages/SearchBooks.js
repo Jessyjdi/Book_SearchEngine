@@ -5,7 +5,8 @@ import {
   Form,
   Button,
   Card,
-  Row
+ Jumbotron,
+ CardColumns, 
 } from 'react-bootstrap';
 import { SAVE_BOOK } from '../utils/mutation';
 import Auth from '../utils/auth';
@@ -74,9 +75,9 @@ const SearchBooks = () => {
     }
 
     try {
-      const response = await saveBook(bookToSave, token);
+      const response = await saveBook({variables: bookToSave, token});
 
-      if (!response.ok) {
+      if (!response) {
         throw new Error('something went wrong!');
       }
 
@@ -89,11 +90,11 @@ const SearchBooks = () => {
 
   return (
     <>
-      <div className="text-light bg-dark p-5">
+      <Jumbotron fluid className="text-light bg-dark">
         <Container>
           <h1>Search for Books!</h1>
           <Form onSubmit={handleFormSubmit}>
-            <Row>
+            <Form.Row>
               <Col xs={12} md={8}>
                 <Form.Control
                   name='searchInput'
@@ -109,18 +110,18 @@ const SearchBooks = () => {
                   Submit Search
                 </Button>
               </Col>
-            </Row>
+            </Form.Row>
           </Form>
         </Container>
-      </div>
+      </Jumbotron>
 
       <Container>
-        <h2 className='pt-5'>
+        <h2>
           {searchedBooks.length
             ? `Viewing ${searchedBooks.length} results:`
             : 'Search for a book to begin'}
         </h2>
-        <Row>
+        <CardColumns>
           {searchedBooks.map((book) => {
             return (
               <Col md="4">
@@ -147,7 +148,7 @@ const SearchBooks = () => {
               </Col>
             );
           })}
-        </Row>
+        </CardColumns>
       </Container>
     </>
   );
