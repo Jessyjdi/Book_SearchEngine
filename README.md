@@ -1,5 +1,18 @@
 # Book_SearchEngine
 
+## Table of Content 📖
+  - [Description](#description)
+  - [User Story](#user-story)
+  - [Acceptance Criteria](#acceptance-criteria)
+  - [Installation](#installation)
+  - [Mockup](#mockup)
+  - [Reach-me](#reach-me)
+  - [GitHub-name](#github-name)
+  - [App-Link](#app-link)
+
+## Description
+
+This is a application that refactors a Google Books API search engine from a RESTful API to a GraphQL API with Apollo Server. The search engine is built using the MERN stack - MongoDB, Express.js, React, and Node.js. A user can create an account, search for books, and save them to a list. On a separately rendered page, the user can see their saved books and remove books from the list.
 
 ## User Story
 
@@ -43,3 +56,25 @@ THEN that book is deleted from my saved books list
 WHEN I click on the Logout button
 THEN I am logged out of the site and presented with a menu with the options Search for Books and Login/Signup and an input field to search for books and a submit button  
 ```
+
+## Installation:
+
+- Download it through Github
+- Run npm i in terminal to install packages
+- Running npm run develop will give you access to the Apollo Server (Graph QL) and the localhost webpage
+
+## Mockup:
+
+![Animation shows "star wars" typed into a search box and books about Star Wars appearing as results.](./Assets/21-mern-homework-demo-01.gif)
+
+## Reach-me
+
+jessyjosephine.mscit@gmail.com
+
+## GitHub-name
+
+https://github.com/Jessyjdi/Book_SearchEngine
+
+## App-Link
+
+https://dry-woodland-46365.herokuapp.com/
