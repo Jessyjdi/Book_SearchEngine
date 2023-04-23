@@ -5,7 +5,7 @@
   - [User Story](#user-story)
   - [Acceptance Criteria](#acceptance-criteria)
   - [Installation](#installation)
-  - [Mockup](#mockup)
+  - [Results](#results)
   - [Reach-me](#reach-me)
   - [GitHub-name](#github-name)
   - [App-Link](#app-link)
@@ -63,9 +63,10 @@ THEN I am logged out of the site and presented with a menu with the options Sear
 - Run npm i in terminal to install packages
 - Running npm run develop will give you access to the Apollo Server (Graph QL) and the localhost webpage
 
-## Mockup:
+## Results:
 
-![Animation shows "star wars" typed into a search box and books about Star Wars appearing as results.](./Assets/21-mern-homework-demo-01.gif)
+![Animation shows "Harry Potter" typed into a search box and books about Harry Potter appearing as results.](./Assets/HarryPotter.gif)
+![Animation shows "Percy Jackson" typed into a search box and books about Percy Jackson appearing as results.](./Assets/PercyJacksonbooks.gif)
 
 ## Reach-me
 
