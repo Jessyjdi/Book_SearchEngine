@@ -1,28 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Container,
-  Col,
-  Form,
-  Button,
-  Card,
- Jumbotron,
- CardColumns, 
-} from 'react-bootstrap';
+import {  Container,  Col,  Form,  Button,  Card, Row} from 'react-bootstrap';
+import { useMutation } from '@apollo/client';
 import { SAVE_BOOK } from '../utils/mutation';
 import Auth from '../utils/auth';
 import { searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
-import { useMutation } from '@apollo/client';
+import { GET_ME } from "../utils/queries";
 
 const SearchBooks = () => {
   // create state for holding returned google api data
   const [searchedBooks, setSearchedBooks] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
-  const [saveBook] = useMutation(SAVE_BOOK);
-
   const [savedBookIds, setSavedBookIds]= useState(getSavedBookIds());
   // create state to hold saved bookId values
+  const [saveBook] = useMutation(SAVE_BOOK,{
+    update (cache, {data:{saveBook}}){
+      /*using spread syntax to update the savedBooks field of the getme object and then writes the updated object back to the cache using cache.writeQuery(). 
+      The try/catch block is used to handle any errors that may occur while reading or writing to the cache.*/
+      try{
+        const { getme } = cache.readQuery({ query: GET_ME });
+        cache.writeQuery({
+          query: GET_ME,
+          data: {
+            me: { ...getme, ...{ savedBooks: [...getme.savedBooks, saveBook] } },
+          },
+        });
+      } catch (err) {
+        console.error(err);
+      }
+      
+    },
+  });
 
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
@@ -75,11 +84,9 @@ const SearchBooks = () => {
     }
 
     try {
-      const response = await saveBook({variables: bookToSave, token});
-
-      if (!response) {
-        throw new Error('something went wrong!');
-      }
+      await saveBook({
+        variables: { book: bookToSave },
+      });
 
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
@@ -90,38 +97,37 @@ const SearchBooks = () => {
 
   return (
     <>
-      <Jumbotron fluid className="text-light bg-dark">
+      <div className="text-light bg-dark">
         <Container>
           <h1>Search for Books!</h1>
           <Form onSubmit={handleFormSubmit}>
-            <Form.Row>
-              <Col xs={12} md={8}>
-                <Form.Control
-                  name='searchInput'
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  type='text'
-                  size='lg'
-                  placeholder='Search for a book'
-                />
-              </Col>
-              <Col xs={12} md={4}>
-                <Button type='submit' variant='success' size='lg'>
-                  Submit Search
-                </Button>
-              </Col>
-            </Form.Row>
+            {/* <Form.Row> */}
+            <Col xs={12} md={8}>
+              <Form.Control
+                name="searchInput"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                type="text"
+                size="lg"
+                placeholder="Search for a book"
+              />
+            </Col>
+            <Col xs={12} md={4}>
+              <Button type="submit" variant="success" size="lg">
+                Submit Search
+              </Button>
+            </Col>
+            {/* </Form.Row> */}
           </Form>
         </Container>
-      </Jumbotron>
-
+      </div>
       <Container>
-        <h2>
+        <h2  className='pt-5'>
           {searchedBooks.length
             ? `Viewing ${searchedBooks.length} results:`
             : 'Search for a book to begin'}
         </h2>
-        <CardColumns>
+        <Row>
           {searchedBooks.map((book) => {
             return (
               <Col md="4">
@@ -148,7 +154,7 @@ const SearchBooks = () => {
               </Col>
             );
           })}
-        </CardColumns>
+        </Row>
       </Container>
     </>
   );
